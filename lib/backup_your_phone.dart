@@ -1,4 +1,5 @@
-import 'package:backup_your_phone/application_appbar.dart';
+import 'package:backup_your_phone/appAndButtonBars/application_appbar.dart';
+import 'package:backup_your_phone/appAndButtonBars/application_buttombar.dart';
 import 'package:flutter/material.dart';
 
 class BackupYourPhone extends StatelessWidget {
@@ -10,6 +11,9 @@ class BackupYourPhone extends StatelessWidget {
       appBar: ApplicationAppbar(
         title: "Backup Your Phone",
       ),
+      floatingActionButton: ApplicationFloatingActionButton(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: ApplicationButtonbar(),
     );
   }
 }
