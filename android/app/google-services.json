@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "903172240104",
+    "project_id": "backupyourphone-aa039",
+    "storage_bucket": "backupyourphone-aa039.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:903172240104:android:4cf3e97ece7f1290c18f5d",
+        "android_client_info": {
+          "package_name": "com.example.backup_your_phone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "903172240104-hqe2dhre38i0k17kvvmduvlr8c5j775l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1a8iAN5HIjPSot68zy1dKvEGwchRckVg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "903172240104-hqe2dhre38i0k17kvvmduvlr8c5j775l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

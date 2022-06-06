@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
-import 'package:backup_your_phone/toast.dart';
 import 'package:flutter/material.dart';
 
 class ApplicationButtonbar extends StatefulWidget {
@@ -67,7 +66,7 @@ class ApplicationFloatingActionButton extends StatelessWidget {
             content: const Text('Are you sure you want to exit the app?'),
             actions: <Widget>[
               TextButton(
-                onPressed: () => ToastMassageShort(msg: "msg"),
+                onPressed: () => Navigator.pop(context),
                 child: const Text('Cancel'),
               ),
               TextButton(
