@@ -1,12 +1,9 @@
-import 'dart:io';
-
 import 'package:backup_your_phone/appAndButtonBars/application_buttombar.dart';
 import 'package:backup_your_phone/pages/contacts.dart';
 import 'package:backup_your_phone/pages/images.dart';
 import 'package:backup_your_phone/pages/pdf_files.dart';
 import 'package:backup_your_phone/pages/videos.dart';
 import 'package:backup_your_phone/provider/google_signin_provider.dart';
-import 'package:backup_your_phone/toast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -80,17 +77,17 @@ class AccountPage extends StatelessWidget {
         ],
       ),
       body: Padding(
-        padding: EdgeInsets.only(top: 50),
+        padding: const EdgeInsets.only(top: 50),
         child: Column(
           children: [
             Center(
               child: Text(
                 "Welcome ${user.displayName}",
-                style: TextStyle(fontSize: 25),
+                style: const TextStyle(fontSize: 25),
               ),
             ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.04),
-            Center(
+            const Center(
               child: Text(
                 "Please choose one of the options",
                 style: TextStyle(fontSize: 20),
@@ -110,7 +107,7 @@ class AccountPage extends StatelessWidget {
                             builder: (context) => const ImagesPage()),
                       );
                     },
-                    child: CircleAvatar(
+                    child: const CircleAvatar(
                       radius: 50,
                       backgroundColor: Colors.white,
                       backgroundImage: NetworkImage(
@@ -129,7 +126,7 @@ class AccountPage extends StatelessWidget {
                             builder: (context) => const VideosPage()),
                       );
                     },
-                    child: CircleAvatar(
+                    child: const CircleAvatar(
                       radius: 50,
                       backgroundColor: Colors.white,
                       backgroundImage: NetworkImage(
@@ -153,7 +150,7 @@ class AccountPage extends StatelessWidget {
                             builder: (context) => const ContactsPage()),
                       );
                     },
-                    child: CircleAvatar(
+                    child: const CircleAvatar(
                       radius: 50,
                       backgroundColor: Colors.white,
                       backgroundImage: NetworkImage(
@@ -172,7 +169,7 @@ class AccountPage extends StatelessWidget {
                             builder: (context) => const PdfFilesPage()),
                       );
                     },
-                    child: CircleAvatar(
+                    child: const CircleAvatar(
                       radius: 50,
                       backgroundColor: Colors.white,
                       backgroundImage: NetworkImage(
