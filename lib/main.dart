@@ -1,4 +1,4 @@
-import 'package:backup_your_phone/backup_your_phone.dart';
+import 'package:backup_your_phone/pages/images.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Backup Your Phone',
       theme: ThemeData.dark(),
-      home: const BackupYourPhone(),
+      home: const ImagesPage(),
     );
   }
 }

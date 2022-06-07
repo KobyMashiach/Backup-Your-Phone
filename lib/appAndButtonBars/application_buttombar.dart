@@ -1,6 +1,10 @@
 import 'dart:io';
 
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
+import 'package:backup_your_phone/pages/contacts.dart';
+import 'package:backup_your_phone/pages/images.dart';
+import 'package:backup_your_phone/pages/pdf_files.dart';
+import 'package:backup_your_phone/pages/videos.dart';
 import 'package:flutter/material.dart';
 
 class ApplicationButtonbar extends StatefulWidget {
@@ -31,8 +35,41 @@ class _ApplicationButtonbarState extends State<ApplicationButtonbar> {
       activeColor: Colors.black,
       inactiveColor: const Color.fromARGB(255, 151, 151, 151),
       // onTap: (index) => print(index),
-      onTap: (index) => setState(() => _bottomNavIndex = index),
+      onTap: (index) {
+        if (_bottomNavIndex != index) {
+          setState(() => _bottomNavIndex = index);
+          currectPageRoute(context);
+        }
+      },
     );
+  }
+}
+
+void currectPageRoute(context) {
+  switch (getBottomNavIndex()) {
+    case 0:
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const ImagesPage()),
+      );
+      break;
+    case 1:
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const VideosPage()),
+      );
+      break;
+    case 2:
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const ContactsPage()),
+      );
+      break;
+    default:
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const PdfFilesPage()),
+      );
   }
 }
 

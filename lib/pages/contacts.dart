@@ -2,18 +2,23 @@ import 'package:backup_your_phone/appAndButtonBars/application_appbar.dart';
 import 'package:backup_your_phone/appAndButtonBars/application_buttombar.dart';
 import 'package:flutter/material.dart';
 
-class BackupYourPhone extends StatelessWidget {
-  const BackupYourPhone({Key? key}) : super(key: key);
+class ContactsPage extends StatelessWidget {
+  const ContactsPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       appBar: ApplicationAppbar(
         title: "Backup Your Phone",
+        icon: const Icon(Icons.person_add),
+        onPressFunction: uploadContact(),
       ),
-      floatingActionButton: ApplicationFloatingActionButton(),
+      floatingActionButton: const ApplicationFloatingActionButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: ApplicationButtonbar(),
+      bottomNavigationBar: const ApplicationButtonbar(),
+      body: const Text("Contacts"),
     );
   }
 }
+
+uploadContact() {}
