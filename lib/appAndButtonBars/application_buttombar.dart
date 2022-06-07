@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:backup_your_phone/pages/contacts.dart';
 import 'package:backup_your_phone/pages/images.dart';
@@ -86,6 +84,10 @@ int getBottomNavIndex() {
   return _bottomNavIndex;
 }
 
+void setBottomNavIndex(int index) {
+  _bottomNavIndex = index;
+}
+
 class ApplicationFloatingActionButton extends StatelessWidget {
   const ApplicationFloatingActionButton({
     Key? key,
@@ -94,25 +96,9 @@ class ApplicationFloatingActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
-      child: const Icon(Icons.exit_to_app, size: 50),
+      child: const Icon(Icons.account_circle_rounded, size: 50),
       onPressed: () {
-        showDialog<String>(
-          context: context,
-          builder: (BuildContext context) => AlertDialog(
-            title: const Text('Exit From App'),
-            content: const Text('Are you sure you want to exit the app?'),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text('Cancel'),
-              ),
-              TextButton(
-                onPressed: () => exit(0),
-                child: const Text('OK'),
-              ),
-            ],
-          ),
-        );
+        Navigator.of(context).pop();
       },
     );
   }
