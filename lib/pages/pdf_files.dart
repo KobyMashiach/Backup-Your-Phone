@@ -10,8 +10,11 @@ class PdfFilesPage extends StatelessWidget {
     return Scaffold(
       appBar: ApplicationAppbar(
         title: "Backup Your Phone",
-        icon: const Icon(Icons.file_upload),
-        onPressFunction: uploadPdfFiles(),
+        iconButton: IconButton(
+            onPressed: () {
+              uploadPdfFiles();
+            },
+            icon: const Icon(Icons.file_upload)),
       ),
       floatingActionButton: const ApplicationFloatingActionButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

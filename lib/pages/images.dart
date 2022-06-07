@@ -49,13 +49,16 @@ class ImagesPage extends StatelessWidget {
     return Scaffold(
         appBar: ApplicationAppbar(
           title: "Backup Your Phone",
-          icon: Icon(Icons.image_search_rounded),
-          onPressFunction: uploadImages(),
+          iconButton: IconButton(
+              onPressed: () {
+                uploadImages();
+              },
+              icon: const Icon(Icons.image_search_rounded)),
         ),
-        floatingActionButton: ApplicationFloatingActionButton(),
+        floatingActionButton: const ApplicationFloatingActionButton(),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        bottomNavigationBar: ApplicationButtonbar(),
-        body: Padding(
+        bottomNavigationBar: const ApplicationButtonbar(),
+        body: const Padding(
           padding: EdgeInsets.only(left: 15, right: 15, top: 15, bottom: 60),
           child: LoadImages(),
         ));
@@ -63,7 +66,7 @@ class ImagesPage extends StatelessWidget {
 }
 
 uploadImages() {
-  print("");
+  print("images");
 }
 
 class LoadImages extends StatelessWidget {

@@ -10,8 +10,11 @@ class VideosPage extends StatelessWidget {
     return Scaffold(
       appBar: ApplicationAppbar(
         title: "Backup Your Phone",
-        icon: const Icon(Icons.video_file_outlined),
-        onPressFunction: uploadVideo(),
+        iconButton: IconButton(
+            onPressed: () {
+              uploadVideo();
+            },
+            icon: const Icon(Icons.video_file_outlined)),
       ),
       floatingActionButton: const ApplicationFloatingActionButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

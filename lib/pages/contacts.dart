@@ -10,8 +10,11 @@ class ContactsPage extends StatelessWidget {
     return Scaffold(
       appBar: ApplicationAppbar(
         title: "Backup Your Phone",
-        icon: const Icon(Icons.person_add),
-        onPressFunction: uploadContact(),
+        iconButton: IconButton(
+            onPressed: () {
+              uploadContact();
+            },
+            icon: const Icon(Icons.person_add)),
       ),
       floatingActionButton: const ApplicationFloatingActionButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
