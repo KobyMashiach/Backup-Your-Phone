@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:backup_your_phone/appAndButtonBars/application_buttombar.dart';
 import 'package:backup_your_phone/pages/contacts.dart';
 import 'package:backup_your_phone/pages/images.dart';
@@ -7,6 +9,7 @@ import 'package:backup_your_phone/provider/google_signin_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AccountPage extends StatelessWidget {
   const AccountPage({Key? key}) : super(key: key);
@@ -31,23 +34,6 @@ class AccountPage extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
-              // showDialog<String>(
-              //   context: context,
-              //   builder: (BuildContext context) => AlertDialog(
-              //     title: const Text('Exit From App'),
-              //     content: const Text('Are you sure you want to exit the app?'),
-              //     actions: <Widget>[
-              //       TextButton(
-              //         onPressed: () => Navigator.pop(context),
-              //         child: const Text('Cancel'),
-              //       ),
-              //       TextButton(
-              //         onPressed: () => exit(0),
-              //         child: const Text('OK'),
-              //       ),
-              //     ],
-              //   ),
-              // );
               showDialog<String>(
                 context: context,
                 builder: (BuildContext context) => AlertDialog(
@@ -59,7 +45,11 @@ class AccountPage extends StatelessWidget {
                       child: const Text('Cancel'),
                     ),
                     TextButton(
-                      onPressed: () {
+                      onPressed: () async {
+                        // logout from google account
+                        SharedPreferences preferences =
+                            await SharedPreferences.getInstance();
+                        await preferences.clear();
                         final provider = Provider.of<GoogleSigninProvider>(
                             context,
                             listen: false);
@@ -87,6 +77,7 @@ class AccountPage extends StatelessWidget {
               ),
             ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+            // choose start
             const Center(
               child: Text(
                 "Please choose one of the options",
