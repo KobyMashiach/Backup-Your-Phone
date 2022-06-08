@@ -142,8 +142,7 @@ Future selectFile(BuildContext context) async {
 
     return;
   }
-  // all files => result.files
-  uploadFile(context, result.files.first);
+  uploadFiles(context, result.files);
   // openFile(file);
 }
 
@@ -173,6 +172,29 @@ Future uploadFile(BuildContext context, PlatformFile files) async {
     ToastMassageLong(msg: err.toString());
     Navigator.of(context).pop(context);
   }
+}
+
+Future uploadFiles(BuildContext context, List<PlatformFile> files) async {
+  showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => const Center(child: CircularProgressIndicator()));
+  for (var element in files) {
+    final file = File(element.path!);
+    final path = "${user!.uid}/images/${element.name}";
+
+    final ref = FirebaseStorage.instance.ref().child(path);
+
+    try {
+      await ref.putFile(file);
+      String fileUrl = await ref.getDownloadURL();
+      images.add(fileUrl);
+      getFirebaseImageFolder();
+    } catch (err) {
+      ToastMassageLong(msg: err.toString());
+    }
+  }
+  Navigator.of(context).pop(context);
 }
 
 Future<List<String>> getFirebaseImageFolder() async {
