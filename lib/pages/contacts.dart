@@ -158,34 +158,13 @@ class _ContactsPageState extends State<ContactsPage> {
     if (_firebaseContacts == null) {
       return const Center(child: CircularProgressIndicator());
     }
-    return ListView.builder(
-      itemCount: _firebaseContacts!.length,
-      itemBuilder: (context, i) => ListTile(
-        title: Text(_firebaseContacts![i].displayName),
-        leading: _firebaseContacts![i].photo != null
-            ? CircleAvatar(
-                backgroundImage: MemoryImage(_firebaseContacts![i].photo!),
-              )
-            : const CircleAvatar(
-                backgroundImage: AssetImage(
-                  "lib/assets/backupYourPhoneLogo.png",
-                ),
-              ),
-        onTap: () async {
-          final fullContact =
-              await FlutterContacts.getContact(_firebaseContacts![i].id);
-          await Navigator.of(context).push(
-              MaterialPageRoute(builder: (_) => ContactPage(fullContact!)));
-        },
-      ),
-    );
-    //     return ListView.builder(
-    //   itemCount: _contacts!.length,
+    // return ListView.builder(
+    //   itemCount: _firebaseContacts!.length,
     //   itemBuilder: (context, i) => ListTile(
-    //     title: Text(_contacts![i].displayName),
-    //     leading: _contacts![i].photo != null
+    //     title: Text(_firebaseContacts![i].displayName),
+    //     leading: _firebaseContacts![i].photo != null
     //         ? CircleAvatar(
-    //             backgroundImage: MemoryImage(_contacts![i].photo!),
+    //             backgroundImage: MemoryImage(_firebaseContacts![i].photo!),
     //           )
     //         : const CircleAvatar(
     //             backgroundImage: AssetImage(
@@ -194,12 +173,33 @@ class _ContactsPageState extends State<ContactsPage> {
     //           ),
     //     onTap: () async {
     //       final fullContact =
-    //           await FlutterContacts.getContact(_contacts![i].id);
+    //           await FlutterContacts.getContact(_firebaseContacts![i].id);
     //       await Navigator.of(context).push(
     //           MaterialPageRoute(builder: (_) => ContactPage(fullContact!)));
     //     },
     //   ),
     // );
+    return ListView.builder(
+      itemCount: _contacts!.length,
+      itemBuilder: (context, i) => ListTile(
+        title: Text(_contacts![i].displayName),
+        leading: _contacts![i].photo != null
+            ? CircleAvatar(
+                backgroundImage: MemoryImage(_contacts![i].photo!),
+              )
+            : const CircleAvatar(
+                backgroundImage: AssetImage(
+                  "lib/assets/backupYourPhoneLogo.png",
+                ),
+              ),
+        onTap: () async {
+          final fullContact =
+              await FlutterContacts.getContact(_contacts![i].id);
+          await Navigator.of(context).push(
+              MaterialPageRoute(builder: (_) => ContactPage(fullContact!)));
+        },
+      ),
+    );
   }
 }
 
@@ -217,10 +217,7 @@ Future<void> downloadFileExample() async {
     await firebase_storage.FirebaseStorage.instance
         .ref(fileToDownload)
         .writeToFile(downloadToFile);
-  } on firebase_core.FirebaseException catch (e) {
-    ToastMassageLong(msg: "Download error: $e");
-    print("@@@@@@@@@@@@@@@@@@@@@@@@@@\n\n\nDownload error: $e\n\n\n");
-  }
+  } on firebase_core.FirebaseException catch (e) {}
 }
 
 class ContactPage extends StatelessWidget {
