@@ -155,7 +155,7 @@ class _ContactsPageState extends State<ContactsPage> {
   }
 
   Widget _body() {
-    if (_firebaseContacts == null) {
+    if (_contacts == null) {
       return const Center(child: CircularProgressIndicator());
     }
     // return ListView.builder(
