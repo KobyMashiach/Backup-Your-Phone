@@ -9,7 +9,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:firebase_core/firebase_core.dart' as firebase_core;
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
@@ -49,10 +49,6 @@ class _ContactsPageState extends State<ContactsPage> {
 
       final firebaseContacts = Contact.fromVCard(getVCard);
       setState(() async => _firebaseContacts!.add(firebaseContacts));
-      // for (var element in count) {
-      //   _firebaseContacts = Contact.fromVCard(vCard)
-
-      // }
     }
   }
 
