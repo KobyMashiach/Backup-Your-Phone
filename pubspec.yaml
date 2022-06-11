@@ -58,6 +58,9 @@ dependencies:
   # open files
   open_file: ^3.2.1
 
+  # video player
+  video_player: ^2.4.4
+
   # toast messages
   fluttertoast: ^8.0.9
 

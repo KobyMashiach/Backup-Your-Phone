@@ -24,6 +24,7 @@ class ContactsPage extends StatefulWidget {
 
 class _ContactsPageState extends State<ContactsPage> {
   List<Contact>? _contacts;
+  bool _permissionDenied = false;
   List<Contact>? _firebaseContacts;
 
   get count => null;
@@ -35,8 +36,8 @@ class _ContactsPageState extends State<ContactsPage> {
   }
 
   Future _fetchContacts() async {
-    if (!await FlutterContacts.requestPermission(readonly: true)) {
-      ToastMassageLong(msg: "Please allow permissions");
+    if (!await Permission.contacts.request().isGranted) {
+      setState(() => _permissionDenied = true);
     } else {
       final contacts = await FlutterContacts.getContacts();
       setState(() => _contacts = contacts);
@@ -151,6 +152,39 @@ class _ContactsPageState extends State<ContactsPage> {
   }
 
   Widget _body() {
+    if (_permissionDenied) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Center(
+                child: Text(
+              "Permission denied",
+              style: TextStyle(fontSize: 30),
+            )),
+            TextButton(
+                onPressed: () async {
+                  await Permission.contacts.shouldShowRequestRationale;
+
+                  if (!await Permission.contacts.request().isGranted) {
+                    if (await checkChangePremissions() == true) {
+                      print(
+                          "@@@@@@@##########@@@@@@@@@@@@######@@@@@@@##########@@@@@@@@@@@@######@@@@@@@##########@@@@@@@@@@@@######");
+                    }
+                  }
+                  print(
+                      "@@@@@@@##########@@@@@@@@@@@@######@@@@@@@##########@@@@@@@@@@@@######@@@@@@@##########@@@@@@@@@@@@######");
+
+                  if (await Permission.contacts.status.isGranted) {
+                    setState(() => _permissionDenied = false);
+                  }
+                },
+                child: const Text(
+                    "Please go to setting and allow contact permissions"))
+          ],
+        ),
+      );
+    }
     if (_contacts == null) {
       return const Center(child: CircularProgressIndicator());
     }
@@ -196,6 +230,11 @@ class _ContactsPageState extends State<ContactsPage> {
         },
       ),
     );
+  }
+
+  Future<bool> checkChangePremissions() async {
+    openAppSettings();
+    return await Permission.contacts.status.isGranted ? true : false;
   }
 }
 
