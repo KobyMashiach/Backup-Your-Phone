@@ -35,7 +35,7 @@ class _ImagesPageState extends State<ImagesPage> {
                     onPressed: () {
                       selectFile(context);
                     },
-                    icon: const Icon(Icons.file_upload)),
+                    icon: const Icon(Icons.image_search_outlined)),
               ),
               floatingActionButton: const ApplicationFloatingActionButton(),
               floatingActionButtonLocation:
@@ -53,7 +53,7 @@ class _ImagesPageState extends State<ImagesPage> {
                   return GestureDetector(
                     onTap: () {}, //open file check
                     child: Card(
-                      // shape of videos
+                      // shape of images
                       clipBehavior: Clip.antiAlias,
                       shape: RoundedRectangleBorder(
                         side: const BorderSide(color: Colors.white30, width: 3),

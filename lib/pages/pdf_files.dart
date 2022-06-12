@@ -57,7 +57,7 @@ class _PdfFilesPageState extends State<PdfFilesPage> {
                   return GestureDetector(
                     onTap: () {}, //open file check
                     child: Card(
-                      // shape of videos
+                      // shape of pdf files
                       clipBehavior: Clip.antiAlias,
                       shape: RoundedRectangleBorder(
                         side: const BorderSide(color: Colors.white30, width: 3),
