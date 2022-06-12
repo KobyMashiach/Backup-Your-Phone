@@ -16,9 +16,7 @@ import 'package:pdf_render/pdf_render_widgets.dart';
 final path = "${user!.uid}/pdfFiles/";
 final ref = FirebaseStorage.instance.ref().child(path);
 
-List<String> pdfFiles = [
-  // 'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf'
-];
+List<String> pdfFiles = [];
 
 class PdfFilesPage extends StatefulWidget {
   const PdfFilesPage({Key? key}) : super(key: key);
@@ -66,25 +64,6 @@ class _PdfFilesPageState extends State<PdfFilesPage> {
                         borderRadius: BorderRadius.circular(30),
                       ),
                       color: Colors.white12,
-                      // child: Image.network(
-                      //   videos[index],
-                      //   fit: BoxFit.fill,
-                      //   loadingBuilder: (BuildContext context,
-                      //       Widget child, // circular until loading
-                      //       ImageChunkEvent? loadingProgress) {
-                      //     if (loadingProgress == null) return child;
-                      //     return Center(
-                      //       child: CircularProgressIndicator(
-                      //         backgroundColor: Colors.white,
-                      //         value: loadingProgress.expectedTotalBytes != null
-                      //             ? loadingProgress.cumulativeBytesLoaded /
-                      //                 loadingProgress.expectedTotalBytes!
-                      //             : null,
-                      //       ),
-                      //     );
-                      //   },
-                      // ),
-
                       child: InkWell(
                         onTap: () {
                           Navigator.push<void>(
@@ -139,14 +118,10 @@ Future selectFile(BuildContext context) async {
   );
 
   if (result == null) {
-    // List<File> files = result.paths.map((path) => File(path!)).toList();
     ToastMassageShort(msg: "Please pick a file");
-    // images = await getFirebaseImageFolder();
-
     return;
   }
   uploadFiles(context, result.files);
-  // openFile(file);
 }
 
 Future uploadFiles(BuildContext context, List<PlatformFile> files) async {
@@ -162,9 +137,6 @@ Future uploadFiles(BuildContext context, List<PlatformFile> files) async {
 
     try {
       await ref.putFile(file);
-      // String fileUrl = await ref.getDownloadURL();
-      // pdfFiles.add(fileUrl);
-      // getFirebasePdfFolder();
     } catch (err) {
       ToastMassageLong(msg: err.toString());
     }

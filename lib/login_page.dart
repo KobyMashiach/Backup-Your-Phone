@@ -13,6 +13,8 @@ class LoginPage extends StatelessWidget {
       appBar: ApplicationAppbar(
         title: "Backup Your Phone",
         iconButton: IconButton(
+          splashColor: Colors.transparent,
+          highlightColor: Colors.transparent,
           onPressed: () {},
           icon: const Icon(
             Icons.phone_android_outlined,
