@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "17482086301",
+    "project_id": "backupyourphone-12b8a",
+    "storage_bucket": "backupyourphone-12b8a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:17482086301:android:0921068471f06916746174",
+        "android_client_info": {
+          "package_name": "com.example.backup_your_phone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "17482086301-9p1a2bigjgohcbufei07for9c1ngcfac.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.backup_your_phone",
+            "certificate_hash": "94fbb00a4039077e85f7402549fac12a1c40a651"
+          }
+        },
+        {
+          "client_id": "17482086301-atuitiv2p2s95ir2minuq21nebkj3v9n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_8gDjp2erqL-5gBs9GWSYvQL9XToXVsw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "17482086301-atuitiv2p2s95ir2minuq21nebkj3v9n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
