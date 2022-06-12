@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print, use_build_context_synchronously
+// ignore_for_file: avoid_print, use_build_context_synchronously, no_leading_underscores_for_local_identifiers
 
 import 'dart:io';
 
@@ -8,7 +8,6 @@ import 'package:backup_your_phone/provider/get_user.dart';
 
 import 'package:backup_your_phone/toast.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:open_file/open_file.dart';
 import 'package:firebase_storage/firebase_storage.dart';

@@ -8,7 +8,6 @@ import 'package:backup_your_phone/pages/images.dart';
 import 'package:backup_your_phone/pages/pdf_files.dart';
 import 'package:backup_your_phone/pages/videos.dart';
 import 'package:backup_your_phone/provider/google_signin_provider.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';

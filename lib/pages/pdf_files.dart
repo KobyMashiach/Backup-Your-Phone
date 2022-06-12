@@ -8,12 +8,10 @@ import 'package:backup_your_phone/pages/show_pdf_full_screen.dart';
 import 'package:backup_your_phone/provider/get_user.dart';
 import 'package:backup_your_phone/toast.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:pdf_render/pdf_render_widgets.dart';
-import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 final path = "${user!.uid}/pdfFiles/";
 final ref = FirebaseStorage.instance.ref().child(path);
@@ -114,7 +112,7 @@ class _PdfFilesPageState extends State<PdfFilesPage> {
                     () async => (await DefaultCacheManager()
                             .getSingleFile(pdfFiles[index]))
                         .path,
-                    params: PdfViewerParams(pageNumber: 1),
+                    params: const PdfViewerParams(pageNumber: 1),
                   ),
                 ),
               ),
@@ -181,8 +179,8 @@ Future getFirebasePdfFolder() async {
   String url;
   final storageRef =
       FirebaseStorage.instance.ref().child(user!.uid).child('pdfFiles');
-  final _result = await storageRef.listAll();
-  for (var element in _result.items) {
+  final result = await storageRef.listAll();
+  for (var element in result.items) {
     url = await element.getDownloadURL();
     pdfFiles.add(url);
   }

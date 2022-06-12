@@ -9,9 +9,8 @@ class ShowPdfFullScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: SfPdfViewer.network(
+    return SfPdfViewer.network(
       pdfPath,
-    ));
+    );
   }
 }

@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, avoid_print, empty_catches
 
 import 'dart:io';
 
@@ -6,7 +6,6 @@ import 'package:backup_your_phone/appAndButtonBars/application_appbar.dart';
 import 'package:backup_your_phone/appAndButtonBars/application_buttombar.dart';
 import 'package:backup_your_phone/provider/get_user.dart';
 import 'package:backup_your_phone/toast.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
@@ -102,7 +101,7 @@ class _ContactsPageState extends State<ContactsPage> {
                         actions: <Widget>[
                           // usually buttons at the bottom of the dialog
                           MaterialButton(
-                            child: Text(
+                            child: const Text(
                               "Click to refresh",
                             ),
                             onPressed: () {
@@ -251,7 +250,7 @@ Future<void> downloadFileExample() async {
     await firebase_storage.FirebaseStorage.instance
         .ref(fileToDownload)
         .writeToFile(downloadToFile);
-  } on firebase_core.FirebaseException catch (e) {}
+  } on firebase_core.FirebaseException {}
 }
 
 class ContactPage extends StatelessWidget {
