@@ -13,9 +13,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:pdf_render/pdf_render_widgets.dart';
 
-// final path = "${user!.uid}/pdfFiles/";
-// final ref = FirebaseStorage.instance.ref().child(path);
-
 List<String> pdfFiles = [];
 
 class PdfFilesPage extends StatefulWidget {
@@ -31,7 +28,8 @@ class _PdfFilesPageState extends State<PdfFilesPage> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<bool>(
-        future: getFirebasePdfFolder(),
+        future:
+            getFirebasePdfFolder(), // check if have pdf files on firebase => if not view loading
         builder: (context, AsyncSnapshot<bool> snapshot) {
           if (snapshot.data == true) {
             return Scaffold(
@@ -73,6 +71,7 @@ class _PdfFilesPageState extends State<PdfFilesPage> {
                             MaterialPageRoute<void>(
                               builder: (BuildContext context) =>
                                   ShowPdfFullScreen(
+                                // open new page to show the pdf in full screen
                                 pdfPath: pdfFiles[index],
                               ),
                             ),
@@ -92,6 +91,7 @@ class _PdfFilesPageState extends State<PdfFilesPage> {
             );
           } else {
             return Scaffold(
+                // if don't have pdf files in firebase
                 appBar: ApplicationAppbar(
                   title: "Backup Your Phone",
                   iconButton: IconButton(
@@ -113,6 +113,7 @@ class _PdfFilesPageState extends State<PdfFilesPage> {
 }
 
 Future selectFile(BuildContext context) async {
+  // pick file from phone storage (allow just pdf files)
   FilePickerResult? result = await FilePicker.platform.pickFiles(
     allowMultiple: true,
     type: FileType.custom,
@@ -127,6 +128,7 @@ Future selectFile(BuildContext context) async {
 }
 
 Future uploadFiles(BuildContext context, List<PlatformFile> files) async {
+  // upload the picked files to firebase
   final user = FirebaseAuth.instance.currentUser;
 
   showDialog(
@@ -149,6 +151,7 @@ Future uploadFiles(BuildContext context, List<PlatformFile> files) async {
 }
 
 Future<bool> getFirebasePdfFolder() async {
+  // refresh the list to show the updated list
   final user = FirebaseAuth.instance.currentUser;
 
   pdfFiles.clear();
