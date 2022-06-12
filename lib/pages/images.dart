@@ -4,14 +4,14 @@ import 'dart:io';
 
 import 'package:backup_your_phone/appAndButtonBars/application_appbar.dart';
 import 'package:backup_your_phone/appAndButtonBars/application_buttombar.dart';
+import 'package:backup_your_phone/provider/get_user.dart';
+
 import 'package:backup_your_phone/toast.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:open_file/open_file.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-
-final user = FirebaseAuth.instance.currentUser;
 
 final path = "${user!.uid}/images/";
 final ref = FirebaseStorage.instance.ref().child(path);

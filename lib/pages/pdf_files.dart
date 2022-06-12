@@ -1,8 +1,11 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 
 import 'package:backup_your_phone/appAndButtonBars/application_appbar.dart';
 import 'package:backup_your_phone/appAndButtonBars/application_buttombar.dart';
 import 'package:backup_your_phone/pages/show_pdf_full_screen.dart';
+import 'package:backup_your_phone/provider/get_user.dart';
 import 'package:backup_your_phone/toast.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -12,13 +15,11 @@ import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:pdf_render/pdf_render_widgets.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
-final user = FirebaseAuth.instance.currentUser;
-
 final path = "${user!.uid}/pdfFiles/";
 final ref = FirebaseStorage.instance.ref().child(path);
 
 List<String> pdfFiles = [
-  'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf'
+  // 'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf'
 ];
 
 class PdfFilesPage extends StatefulWidget {
@@ -29,20 +30,39 @@ class PdfFilesPage extends StatefulWidget {
 }
 
 class _PdfFilesPageState extends State<PdfFilesPage> {
-  // Future selectFile(BuildContext context) async {
+  void updatePdf() {
+    setState(() async {
+      showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (context) =>
+              const Center(child: CircularProgressIndicator()));
+      try {
+        String fileUrl = await ref.getDownloadURL();
+        pdfFiles.add(fileUrl);
+        pdfFiles = await getFirebasePdfFolder();
+      } catch (err) {
+        ToastMassageLong(msg: err.toString());
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: ApplicationAppbar(
           title: "Backup Your Phone",
-          iconButton:
-              IconButton(onPressed: () {}, icon: const Icon(Icons.file_upload)),
+          iconButton: IconButton(
+              onPressed: () {
+                selectFile(context);
+              },
+              icon: const Icon(Icons.file_upload)),
         ),
         floatingActionButton: const ApplicationFloatingActionButton(),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: const ApplicationButtonbar(),
         body: GridView.builder(
-          itemCount: 10,
+          itemCount: pdfFiles.length,
           gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
             // grid view
             maxCrossAxisExtent: 200,
@@ -85,15 +105,15 @@ class _PdfFilesPageState extends State<PdfFilesPage> {
                       context,
                       MaterialPageRoute<void>(
                         builder: (BuildContext context) => ShowPdfFullScreen(
-                          pdfPath: pdfFiles[0],
+                          pdfPath: pdfFiles[index],
                         ),
                       ),
                     );
                   },
                   child: PdfViewer.openFutureFile(
-                    () async =>
-                        (await DefaultCacheManager().getSingleFile(pdfFiles[0]))
-                            .path,
+                    () async => (await DefaultCacheManager()
+                            .getSingleFile(pdfFiles[index]))
+                        .path,
                     params: PdfViewerParams(pageNumber: 1),
                   ),
                 ),
@@ -105,8 +125,11 @@ class _PdfFilesPageState extends State<PdfFilesPage> {
 }
 
 Future selectFile(BuildContext context) async {
-  FilePickerResult? result = await FilePicker.platform
-      .pickFiles(allowMultiple: true, type: FileType.image);
+  FilePickerResult? result = await FilePicker.platform.pickFiles(
+    allowMultiple: true,
+    type: FileType.custom,
+    allowedExtensions: ['pdf'],
+  );
 
   if (result == null) {
     // List<File> files = result.paths.map((path) => File(path!)).toList();
@@ -126,7 +149,7 @@ Future uploadFiles(BuildContext context, List<PlatformFile> files) async {
       builder: (context) => const Center(child: CircularProgressIndicator()));
   for (var element in files) {
     final file = File(element.path!);
-    final path = "${user!.uid}/images/${element.name}";
+    final path = "${user!.uid}/pdfFiles/${element.name}";
 
     final ref = FirebaseStorage.instance.ref().child(path);
 
@@ -134,10 +157,33 @@ Future uploadFiles(BuildContext context, List<PlatformFile> files) async {
       await ref.putFile(file);
       String fileUrl = await ref.getDownloadURL();
       pdfFiles.add(fileUrl);
-      // getFirebaseImageFolder();
+      getFirebasePdfFolder();
     } catch (err) {
       ToastMassageLong(msg: err.toString());
     }
   }
   Navigator.of(context).pop(context);
+}
+
+Future getFirebasePdfFolder() async {
+  // List<String> _result = [];
+  // String url;
+  // final Reference storageRef =
+  //     FirebaseStorage.instance.ref().child(user!.uid).child('pdfFiles');
+  // storageRef.listAll().then((result) async {
+  //   for (var element in result.items) {
+  //     url = await element.getDownloadURL();
+  //     _result.add(url);
+  //   }
+  // });
+  // return _result;
+
+  String url;
+  final storageRef =
+      FirebaseStorage.instance.ref().child(user!.uid).child('pdfFiles');
+  final _result = await storageRef.listAll();
+  for (var element in _result.items) {
+    url = await element.getDownloadURL();
+    pdfFiles.add(url);
+  }
 }

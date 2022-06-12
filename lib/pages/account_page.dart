@@ -1,6 +1,8 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:backup_your_phone/appAndButtonBars/application_buttombar.dart';
+import 'package:backup_your_phone/provider/get_user.dart';
+
 import 'package:backup_your_phone/pages/contacts.dart';
 import 'package:backup_your_phone/pages/images.dart';
 import 'package:backup_your_phone/pages/pdf_files.dart';
@@ -16,7 +18,6 @@ class AccountPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final user = FirebaseAuth.instance.currentUser;
     return Scaffold(
       appBar: AppBar(
         title: const Text("Account"),
@@ -72,7 +73,7 @@ class AccountPage extends StatelessWidget {
           children: [
             Center(
               child: Text(
-                "Welcome ${user.displayName}",
+                "Welcome ${user!.displayName}",
                 style: const TextStyle(fontSize: 25),
               ),
             ),
