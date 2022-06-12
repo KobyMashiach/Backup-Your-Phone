@@ -26,6 +26,7 @@ class GoogleSigninProvider extends ChangeNotifier {
       await FirebaseAuth.instance.signInWithCredential(credential);
     } catch (err) {
       ToastMassageShort(msg: err.toString());
+      print("@@@@@@@@@@@@@@@@@@@$err");
     }
 
     notifyListeners();

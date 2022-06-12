@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:backup_your_phone/appAndButtonBars/application_appbar.dart';
 import 'package:backup_your_phone/appAndButtonBars/application_buttombar.dart';
+import 'package:backup_your_phone/pages/show_video_full_screen.dart';
 import 'package:backup_your_phone/toast.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -24,28 +25,21 @@ class _VideosPageState extends State<VideosPage> {
   final user = FirebaseAuth.instance.currentUser;
   late final List<VideoPlayerController> _controllers = [];
 
-  //-------------------TEST---------------------------
   VideoPlayerController getNewController(String path) {
     return VideoPlayerController.network(path)
       ..initialize().then((_) {
-        // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
         setState(() {});
       });
   }
 
-  //-------------------TEST---------------------------
-
   @override
   Widget build(BuildContext context) {
-    _controllers.add(getNewController(
-        'https://firebasestorage.googleapis.com/v0/b/backupyourphone-aa039.appspot.com/o/EYjeDysmhKV3lWmQuPbmgbwhE6Y2%2Fvideos%2FVID-20220609-WA0001.mp4?alt=media&token=d083ed41-67a4-41f9-8f61-5d28c68fedb1'));
-    _controllers.add(getNewController(
-        'https://firebasestorage.googleapis.com/v0/b/backupyourphone-aa039.appspot.com/o/EYjeDysmhKV3lWmQuPbmgbwhE6Y2%2Fvideos%2FVID-20220611-WA0000.mp4?alt=media&token=65f46efb-b87b-4ee1-a2b1-b6c67c6f347a'));
     return FutureBuilder<bool>(
-        future:
-            getFirebaseVideosFolder(), // check if have videos files on firebase => if not view loading
+        future: getFirebaseVideosFolder(),
+        // check if have videos files on firebase => if not view loading
         builder: (context, AsyncSnapshot<bool> snapshot) {
           if (snapshot.data == true) {
+            buildVideos();
             return Scaffold(
               appBar: ApplicationAppbar(
                 title: "Backup Your Phone",
@@ -80,23 +74,30 @@ class _VideosPageState extends State<VideosPage> {
                       color: Colors.white12,
                       child: InkWell(
                         onTap: () {
-                          // Navigator.push<void>(
-                          //   context,
-                          //   MaterialPageRoute<void>(
-                          //     builder: (BuildContext context) =>
-                          //         ShowPdfFullScreen(
-                          //       // open new page to show the pdf in full screen
-                          //       pdfPath: images[index],
-                          //     ),
-                          //   ),
-                          // );
+                          Navigator.push<void>(
+                            context,
+                            MaterialPageRoute<void>(
+                              builder: (BuildContext context) =>
+                                  ShowVideosFullScreen(
+                                // open new page to show the pdf in full screen
+                                video: _controllers[index],
+                              ),
+                            ),
+                          );
                         },
                         child: _controllers[index].value.isInitialized
                             ? InkWell(
                                 onTap: () {
-                                  _controllers[index].value.isPlaying
-                                      ? _controllers[index].pause()
-                                      : _controllers[index].play();
+                                  Navigator.push<void>(
+                                    context,
+                                    MaterialPageRoute<void>(
+                                      builder: (BuildContext context) =>
+                                          ShowVideosFullScreen(
+                                        // open new page to show the video in full screen
+                                        video: _controllers[index],
+                                      ),
+                                    ),
+                                  );
                                 },
                                 child: AspectRatio(
                                   aspectRatio:
@@ -104,14 +105,16 @@ class _VideosPageState extends State<VideosPage> {
                                   child: Stack(
                                     children: [
                                       VideoPlayer(_controllers[index]),
-                                      const Padding(
-                                        padding: EdgeInsets.all(8.0),
-                                        child: Icon(Icons.play_arrow, shadows: [
-                                          Shadow(
-                                            color: Colors.black,
-                                            blurRadius: 10,
-                                          )
-                                        ]),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: IconButton(
+                                          icon: Icon(Icons.play_arrow),
+                                          onPressed: (() {
+                                            _controllers[index].value.isPlaying
+                                                ? _controllers[index].pause()
+                                                : _controllers[index].play();
+                                          }),
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -144,6 +147,12 @@ class _VideosPageState extends State<VideosPage> {
                 ));
           }
         });
+  }
+
+  buildVideos() async {
+    for (var element in videos) {
+      _controllers.add(getNewController(element));
+    }
   }
 }
 

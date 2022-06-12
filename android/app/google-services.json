@@ -1,20 +1,20 @@
 {
   "project_info": {
-    "project_number": "903172240104",
-    "project_id": "backupyourphone-aa039",
-    "storage_bucket": "backupyourphone-aa039.appspot.com"
+    "project_number": "17482086301",
+    "project_id": "backupyourphone-12b8a",
+    "storage_bucket": "backupyourphone-12b8a.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:903172240104:android:4cf3e97ece7f1290c18f5d",
+        "mobilesdk_app_id": "1:17482086301:android:0921068471f06916746174",
         "android_client_info": {
           "package_name": "com.example.backup_your_phone"
         }
       },
       "oauth_client": [
         {
-          "client_id": "903172240104-4ua4r5tf80lbijbe6mbtl3mm9fm7n2q5.apps.googleusercontent.com",
+          "client_id": "17482086301-9p1a2bigjgohcbufei07for9c1ngcfac.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.backup_your_phone",
@@ -22,20 +22,20 @@
           }
         },
         {
-          "client_id": "903172240104-hqe2dhre38i0k17kvvmduvlr8c5j775l.apps.googleusercontent.com",
+          "client_id": "17482086301-atuitiv2p2s95ir2minuq21nebkj3v9n.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyB1a8iAN5HIjPSot68zy1dKvEGwchRckVg"
+          "current_key": "AIzaSyA_8gDjp2erqL-5gBs9GWSYvQL9XToXVsw"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "903172240104-hqe2dhre38i0k17kvvmduvlr8c5j775l.apps.googleusercontent.com",
+              "client_id": "17482086301-atuitiv2p2s95ir2minuq21nebkj3v9n.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
