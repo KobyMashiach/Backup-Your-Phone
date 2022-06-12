@@ -28,97 +28,106 @@ class PdfFilesPage extends StatefulWidget {
 }
 
 class _PdfFilesPageState extends State<PdfFilesPage> {
-  void updatePdf() {
-    setState(() async {
-      showDialog(
-          context: context,
-          barrierDismissible: false,
-          builder: (context) =>
-              const Center(child: CircularProgressIndicator()));
-      try {
-        String fileUrl = await ref.getDownloadURL();
-        pdfFiles.add(fileUrl);
-        pdfFiles = await getFirebasePdfFolder();
-      } catch (err) {
-        ToastMassageLong(msg: err.toString());
-      }
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: ApplicationAppbar(
-          title: "Backup Your Phone",
-          iconButton: IconButton(
-              onPressed: () {
-                selectFile(context);
-              },
-              icon: const Icon(Icons.file_upload)),
-        ),
-        floatingActionButton: const ApplicationFloatingActionButton(),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        bottomNavigationBar: const ApplicationButtonbar(),
-        body: GridView.builder(
-          itemCount: pdfFiles.length,
-          gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-            // grid view
-            maxCrossAxisExtent: 200,
-            crossAxisSpacing: 20,
-            mainAxisSpacing: 20,
-          ),
-          itemBuilder: (BuildContext context, int index) {
-            return GestureDetector(
-              onTap: () {}, //open file check
-              child: Card(
-                // shape of videos
-                clipBehavior: Clip.antiAlias,
-                shape: RoundedRectangleBorder(
-                  side: const BorderSide(color: Colors.white30, width: 3),
-                  borderRadius: BorderRadius.circular(30),
+    return FutureBuilder<bool>(
+        future: getFirebasePdfFolder(),
+        builder: (context, AsyncSnapshot<bool> snapshot) {
+          if (snapshot.data == true) {
+            return Scaffold(
+              appBar: ApplicationAppbar(
+                title: "Backup Your Phone",
+                iconButton: IconButton(
+                    onPressed: () {
+                      selectFile(context);
+                    },
+                    icon: const Icon(Icons.file_upload)),
+              ),
+              floatingActionButton: const ApplicationFloatingActionButton(),
+              floatingActionButtonLocation:
+                  FloatingActionButtonLocation.centerDocked,
+              bottomNavigationBar: const ApplicationButtonbar(),
+              body: GridView.builder(
+                itemCount: pdfFiles.length,
+                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                  // grid view
+                  maxCrossAxisExtent: 200,
+                  crossAxisSpacing: 20,
+                  mainAxisSpacing: 20,
                 ),
-                color: Colors.white12,
-                // child: Image.network(
-                //   videos[index],
-                //   fit: BoxFit.fill,
-                //   loadingBuilder: (BuildContext context,
-                //       Widget child, // circular until loading
-                //       ImageChunkEvent? loadingProgress) {
-                //     if (loadingProgress == null) return child;
-                //     return Center(
-                //       child: CircularProgressIndicator(
-                //         backgroundColor: Colors.white,
-                //         value: loadingProgress.expectedTotalBytes != null
-                //             ? loadingProgress.cumulativeBytesLoaded /
-                //                 loadingProgress.expectedTotalBytes!
-                //             : null,
-                //       ),
-                //     );
-                //   },
-                // ),
+                itemBuilder: (BuildContext context, int index) {
+                  return GestureDetector(
+                    onTap: () {}, //open file check
+                    child: Card(
+                      // shape of videos
+                      clipBehavior: Clip.antiAlias,
+                      shape: RoundedRectangleBorder(
+                        side: const BorderSide(color: Colors.white30, width: 3),
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      color: Colors.white12,
+                      // child: Image.network(
+                      //   videos[index],
+                      //   fit: BoxFit.fill,
+                      //   loadingBuilder: (BuildContext context,
+                      //       Widget child, // circular until loading
+                      //       ImageChunkEvent? loadingProgress) {
+                      //     if (loadingProgress == null) return child;
+                      //     return Center(
+                      //       child: CircularProgressIndicator(
+                      //         backgroundColor: Colors.white,
+                      //         value: loadingProgress.expectedTotalBytes != null
+                      //             ? loadingProgress.cumulativeBytesLoaded /
+                      //                 loadingProgress.expectedTotalBytes!
+                      //             : null,
+                      //       ),
+                      //     );
+                      //   },
+                      // ),
 
-                child: InkWell(
-                  onTap: () {
-                    Navigator.push<void>(
-                      context,
-                      MaterialPageRoute<void>(
-                        builder: (BuildContext context) => ShowPdfFullScreen(
-                          pdfPath: pdfFiles[index],
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.push<void>(
+                            context,
+                            MaterialPageRoute<void>(
+                              builder: (BuildContext context) =>
+                                  ShowPdfFullScreen(
+                                pdfPath: pdfFiles[index],
+                              ),
+                            ),
+                          );
+                        },
+                        child: PdfViewer.openFutureFile(
+                          () async => (await DefaultCacheManager()
+                                  .getSingleFile(pdfFiles[index]))
+                              .path,
+                          params: const PdfViewerParams(pageNumber: 1),
                         ),
                       ),
-                    );
-                  },
-                  child: PdfViewer.openFutureFile(
-                    () async => (await DefaultCacheManager()
-                            .getSingleFile(pdfFiles[index]))
-                        .path,
-                    params: const PdfViewerParams(pageNumber: 1),
-                  ),
-                ),
+                    ),
+                  );
+                },
               ),
             );
-          },
-        ));
+          } else {
+            return Scaffold(
+                appBar: ApplicationAppbar(
+                  title: "Backup Your Phone",
+                  iconButton: IconButton(
+                      onPressed: () {
+                        selectFile(context);
+                      },
+                      icon: const Icon(Icons.file_upload)),
+                ),
+                floatingActionButton: const ApplicationFloatingActionButton(),
+                floatingActionButtonLocation:
+                    FloatingActionButtonLocation.centerDocked,
+                bottomNavigationBar: const ApplicationButtonbar(),
+                body: const Center(
+                  child: CircularProgressIndicator(),
+                ));
+          }
+        });
   }
 }
 
@@ -153,9 +162,9 @@ Future uploadFiles(BuildContext context, List<PlatformFile> files) async {
 
     try {
       await ref.putFile(file);
-      String fileUrl = await ref.getDownloadURL();
-      pdfFiles.add(fileUrl);
-      getFirebasePdfFolder();
+      // String fileUrl = await ref.getDownloadURL();
+      // pdfFiles.add(fileUrl);
+      // getFirebasePdfFolder();
     } catch (err) {
       ToastMassageLong(msg: err.toString());
     }
@@ -163,19 +172,8 @@ Future uploadFiles(BuildContext context, List<PlatformFile> files) async {
   Navigator.of(context).pop(context);
 }
 
-Future getFirebasePdfFolder() async {
-  // List<String> _result = [];
-  // String url;
-  // final Reference storageRef =
-  //     FirebaseStorage.instance.ref().child(user!.uid).child('pdfFiles');
-  // storageRef.listAll().then((result) async {
-  //   for (var element in result.items) {
-  //     url = await element.getDownloadURL();
-  //     _result.add(url);
-  //   }
-  // });
-  // return _result;
-
+Future<bool> getFirebasePdfFolder() async {
+  pdfFiles.clear();
   String url;
   final storageRef =
       FirebaseStorage.instance.ref().child(user!.uid).child('pdfFiles');
@@ -184,4 +182,5 @@ Future getFirebasePdfFolder() async {
     url = await element.getDownloadURL();
     pdfFiles.add(url);
   }
+  return pdfFiles.isEmpty ? false : true;
 }
