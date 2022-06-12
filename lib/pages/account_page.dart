@@ -1,13 +1,12 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:backup_your_phone/appAndButtonBars/application_buttombar.dart';
-import 'package:backup_your_phone/provider/get_user.dart';
-
 import 'package:backup_your_phone/pages/contacts.dart';
 import 'package:backup_your_phone/pages/images.dart';
 import 'package:backup_your_phone/pages/pdf_files.dart';
 import 'package:backup_your_phone/pages/videos.dart';
 import 'package:backup_your_phone/provider/google_signin_provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -17,6 +16,8 @@ class AccountPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Account"),
@@ -72,7 +73,7 @@ class AccountPage extends StatelessWidget {
           children: [
             Center(
               child: Text(
-                "Welcome ${user!.displayName}",
+                "Welcome ${user.displayName}",
                 style: const TextStyle(fontSize: 25),
               ),
             ),

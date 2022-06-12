@@ -5,16 +5,16 @@ import 'dart:io';
 import 'package:backup_your_phone/appAndButtonBars/application_appbar.dart';
 import 'package:backup_your_phone/appAndButtonBars/application_buttombar.dart';
 import 'package:backup_your_phone/pages/show_pdf_full_screen.dart';
-import 'package:backup_your_phone/provider/get_user.dart';
 import 'package:backup_your_phone/toast.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:pdf_render/pdf_render_widgets.dart';
 
-final path = "${user!.uid}/pdfFiles/";
-final ref = FirebaseStorage.instance.ref().child(path);
+// final path = "${user!.uid}/pdfFiles/";
+// final ref = FirebaseStorage.instance.ref().child(path);
 
 List<String> pdfFiles = [];
 
@@ -26,6 +26,8 @@ class PdfFilesPage extends StatefulWidget {
 }
 
 class _PdfFilesPageState extends State<PdfFilesPage> {
+  final user = FirebaseAuth.instance.currentUser;
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<bool>(
@@ -125,6 +127,8 @@ Future selectFile(BuildContext context) async {
 }
 
 Future uploadFiles(BuildContext context, List<PlatformFile> files) async {
+  final user = FirebaseAuth.instance.currentUser;
+
   showDialog(
       context: context,
       barrierDismissible: false,
@@ -145,6 +149,8 @@ Future uploadFiles(BuildContext context, List<PlatformFile> files) async {
 }
 
 Future<bool> getFirebasePdfFolder() async {
+  final user = FirebaseAuth.instance.currentUser;
+
   pdfFiles.clear();
   String url;
   final storageRef =

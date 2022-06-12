@@ -4,8 +4,8 @@ import 'dart:io';
 
 import 'package:backup_your_phone/appAndButtonBars/application_appbar.dart';
 import 'package:backup_your_phone/appAndButtonBars/application_buttombar.dart';
-import 'package:backup_your_phone/provider/get_user.dart';
 import 'package:backup_your_phone/toast.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
@@ -24,6 +24,7 @@ class _ContactsPageState extends State<ContactsPage> {
   List<Contact>? _contacts;
   bool _permissionDenied = false;
   List<Contact>? _firebaseContacts;
+  final user = FirebaseAuth.instance.currentUser;
 
   get count => null;
 
@@ -237,6 +238,8 @@ class _ContactsPageState extends State<ContactsPage> {
 }
 
 Future<void> downloadFileExample() async {
+  final user = FirebaseAuth.instance.currentUser;
+
   //First you get the documents folder location on the device...
   // Directory appDocDir = await getApplicationDocumentsDirectory();
   //Here you'll specify the file it should be saved as

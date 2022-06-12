@@ -4,16 +4,16 @@ import 'dart:io';
 
 import 'package:backup_your_phone/appAndButtonBars/application_appbar.dart';
 import 'package:backup_your_phone/appAndButtonBars/application_buttombar.dart';
-import 'package:backup_your_phone/provider/get_user.dart';
 import 'package:backup_your_phone/toast.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:open_file/open_file.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:video_player/video_player.dart';
 
-final path = "${user!.uid}/videos/";
-final ref = FirebaseStorage.instance.ref().child(path);
+// final path = "${user!.uid}/videos/";
+// final ref = FirebaseStorage.instance.ref().child(path);
 
 // list of all videos pathes
 List<String> videos = [];
@@ -26,6 +26,8 @@ class VideosPage extends StatefulWidget {
 }
 
 class _VideosPageState extends State<VideosPage> {
+  final user = FirebaseAuth.instance.currentUser;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -196,6 +198,8 @@ void openFile(PlatformFile file) {
 }
 
 Future uploadFile(BuildContext context, PlatformFile files) async {
+  final user = FirebaseAuth.instance.currentUser;
+
   showDialog(
       context: context,
       barrierDismissible: false,
@@ -220,6 +224,8 @@ Future uploadFile(BuildContext context, PlatformFile files) async {
 }
 
 Future uploadFiles(BuildContext context, List<PlatformFile> files) async {
+  final user = FirebaseAuth.instance.currentUser;
+
   showDialog(
       context: context,
       barrierDismissible: false,
@@ -243,6 +249,8 @@ Future uploadFiles(BuildContext context, List<PlatformFile> files) async {
 }
 
 Future<List<String>> getFirebaseVideoFolder() async {
+  final user = FirebaseAuth.instance.currentUser;
+
   List<String> _result = [];
   String url;
   final Reference storageRef =
