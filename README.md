@@ -1,6 +1,7 @@
 # backup_your_phone
 
-A new Flutter project.
+Upload to firebase images, videos, pdf files and contacts.
+Displays everything directly from the firebase by urls.
 
 ## Getting Started
 
