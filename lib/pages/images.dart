@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:backup_your_phone/appAndButtonBars/application_appbar.dart';
 import 'package:backup_your_phone/appAndButtonBars/application_buttombar.dart';
+import 'package:backup_your_phone/pages/show_image_full_screen.dart';
 import 'package:backup_your_phone/toast.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -62,16 +63,16 @@ class _ImagesPageState extends State<ImagesPage> {
                       color: Colors.white12,
                       child: InkWell(
                         onTap: () {
-                          // Navigator.push<void>(
-                          //   context,
-                          //   MaterialPageRoute<void>(
-                          //     builder: (BuildContext context) =>
-                          //         ShowPdfFullScreen(
-                          //       // open new page to show the pdf in full screen
-                          //       pdfPath: images[index],
-                          //     ),
-                          //   ),
-                          // );
+                          Navigator.push<void>(
+                            context,
+                            MaterialPageRoute<void>(
+                              builder: (BuildContext context) =>
+                                  ShowImageFullScreen(
+                                // open new page to show the image in full screen
+                                imagePath: images[index],
+                              ),
+                            ),
+                          );
                         },
                         child: Image.network(
                           images[index],

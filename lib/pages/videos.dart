@@ -108,7 +108,7 @@ class _VideosPageState extends State<VideosPage> {
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: IconButton(
-                                          icon: Icon(Icons.play_arrow),
+                                          icon: const Icon(Icons.play_arrow),
                                           onPressed: (() {
                                             _controllers[index].value.isPlaying
                                                 ? _controllers[index].pause()

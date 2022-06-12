@@ -22,7 +22,7 @@ class _ShowVideosFullScreenState extends State<ShowVideosFullScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final VideoPlayerController _controller = widget.video;
+    final VideoPlayerController controller = widget.video;
 
     return Scaffold(
       appBar: ApplicationAppbar(
@@ -34,23 +34,21 @@ class _ShowVideosFullScreenState extends State<ShowVideosFullScreen> {
             onPressed: () {}),
       ),
       body: Center(
-        child: _controller.value.isInitialized
+        child: controller.value.isInitialized
             ? AspectRatio(
-                aspectRatio: _controller.value.aspectRatio,
-                child: VideoPlayer(_controller),
+                aspectRatio: controller.value.aspectRatio,
+                child: VideoPlayer(controller),
               )
             : Container(),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           setState(() {
-            _controller.value.isPlaying
-                ? _controller.pause()
-                : _controller.play();
+            controller.value.isPlaying ? controller.pause() : controller.play();
           });
         },
         child: Icon(
-          _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
+          controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
         ),
       ),
     );

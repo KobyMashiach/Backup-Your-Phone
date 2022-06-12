@@ -32,7 +32,6 @@ class _ApplicationButtonbarState extends State<ApplicationButtonbar> {
       iconSize: 30,
       activeColor: Colors.black,
       inactiveColor: const Color.fromARGB(255, 151, 151, 151),
-      // onTap: (index) => print(index),
       onTap: (index) {
         if (_bottomNavIndex != index) {
           setState(() => _bottomNavIndex = index);

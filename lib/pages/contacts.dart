@@ -166,13 +166,8 @@ class _ContactsPageState extends State<ContactsPage> {
                   await Permission.contacts.shouldShowRequestRationale;
 
                   if (!await Permission.contacts.request().isGranted) {
-                    if (await checkChangePremissions() == true) {
-                      print(
-                          "@@@@@@@##########@@@@@@@@@@@@######@@@@@@@##########@@@@@@@@@@@@######@@@@@@@##########@@@@@@@@@@@@######");
-                    }
+                    if (await checkChangePremissions() == true) {}
                   }
-                  print(
-                      "@@@@@@@##########@@@@@@@@@@@@######@@@@@@@##########@@@@@@@@@@@@######@@@@@@@##########@@@@@@@@@@@@######");
 
                   if (await Permission.contacts.status.isGranted) {
                     setState(() => _permissionDenied = false);
@@ -187,27 +182,7 @@ class _ContactsPageState extends State<ContactsPage> {
     if (_contacts == null) {
       return const Center(child: CircularProgressIndicator());
     }
-    // return ListView.builder(
-    //   itemCount: _firebaseContacts!.length,
-    //   itemBuilder: (context, i) => ListTile(
-    //     title: Text(_firebaseContacts![i].displayName),
-    //     leading: _firebaseContacts![i].photo != null
-    //         ? CircleAvatar(
-    //             backgroundImage: MemoryImage(_firebaseContacts![i].photo!),
-    //           )
-    //         : const CircleAvatar(
-    //             backgroundImage: AssetImage(
-    //               "lib/assets/backupYourPhoneLogo.png",
-    //             ),
-    //           ),
-    //     onTap: () async {
-    //       final fullContact =
-    //           await FlutterContacts.getContact(_firebaseContacts![i].id);
-    //       await Navigator.of(context).push(
-    //           MaterialPageRoute(builder: (_) => ContactPage(fullContact!)));
-    //     },
-    //   ),
-    // );
+
     return ListView.builder(
       itemCount: _contacts!.length,
       itemBuilder: (context, i) => ListTile(
