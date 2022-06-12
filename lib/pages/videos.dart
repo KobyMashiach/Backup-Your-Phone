@@ -25,25 +25,22 @@ class _VideosPageState extends State<VideosPage> {
   late final List<VideoPlayerController> _controllers = [];
 
   //-------------------TEST---------------------------
-  VideoPlayerController getNewController() {
-    return VideoPlayerController.network(getVideoPath())
+  VideoPlayerController getNewController(String path) {
+    return VideoPlayerController.network(path)
       ..initialize().then((_) {
         // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
         setState(() {});
       });
   }
 
-  String getVideoPath() {
-    return 'https://firebasestorage.googleapis.com/v0/b/backupyourphone-aa039.appspot.com/o/EYjeDysmhKV3lWmQuPbmgbwhE6Y2%2Fvideos%2FVID-20220609-WA0001.mp4?alt=media&token=d083ed41-67a4-41f9-8f61-5d28c68fedb1';
-  }
-
   //-------------------TEST---------------------------
 
   @override
   Widget build(BuildContext context) {
-    _controllers.add(getNewController());
-    _controllers.add(getNewController());
-    _controllers.add(getNewController());
+    _controllers.add(getNewController(
+        'https://firebasestorage.googleapis.com/v0/b/backupyourphone-aa039.appspot.com/o/EYjeDysmhKV3lWmQuPbmgbwhE6Y2%2Fvideos%2FVID-20220609-WA0001.mp4?alt=media&token=d083ed41-67a4-41f9-8f61-5d28c68fedb1'));
+    _controllers.add(getNewController(
+        'https://firebasestorage.googleapis.com/v0/b/backupyourphone-aa039.appspot.com/o/EYjeDysmhKV3lWmQuPbmgbwhE6Y2%2Fvideos%2FVID-20220611-WA0000.mp4?alt=media&token=65f46efb-b87b-4ee1-a2b1-b6c67c6f347a'));
     return FutureBuilder<bool>(
         future:
             getFirebaseVideosFolder(), // check if have videos files on firebase => if not view loading
@@ -120,7 +117,7 @@ class _VideosPageState extends State<VideosPage> {
                                   ),
                                 ),
                               )
-                            : const CircularProgressIndicator(),
+                            : const Center(child: CircularProgressIndicator()),
                       ),
                     ),
                   );
